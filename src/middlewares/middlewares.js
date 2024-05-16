@@ -28,6 +28,18 @@ function checkConclusao(req, res, next){
         })
     }
 
+    if(!req.body.titulo){
+        return res.status(400).send({
+            message: "Inclua o titulo da tarefa."
+        })
+    }
+
+    if(!req.body.status){
+        return res.status(400).send({
+            message: "Inclua o status de conclusão da tarefa."
+        })
+    }
+
     const data = new Date(req.body.dataConclusao);
     const hoje =  new Date();
 
@@ -66,9 +78,18 @@ function checkUpdate(req, res, next){
     return next();
 }
 
-function checkDataUpdate(req, res, next){
+function checkDataUpdate(req){
+    const {dataConclusao} = req
+    const dataAtual = new Date();
+    const dataLimite = new Date(dataConclusao)
 
+    if(dataLimite < dataAtual){
+        return false
+    }else{
+        console.log("Data conclusão dentro do prazo")
+        return true
+    }
 }
 
-module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate }
+module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate }
 

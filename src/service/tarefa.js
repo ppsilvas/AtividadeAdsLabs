@@ -1,4 +1,5 @@
 const Tarefa = require("../models/tarefa");
+const middleware = require("../middlewares/middlewares");
 
 async function list(queryParams){
     return await Tarefa.findAll({where: queryParams});
@@ -12,6 +13,21 @@ async function create(body){
 
 async function uptade(idTarefa, body){
     const editTarefa = await Tarefa.findByPk(idTarefa);
+    const resultado = middleware.checkDataUpdate(editTarefa);
+
+    if(resultado === true && body.status !== null){
+
+        editTarefa.titulo = body.titulo ?? editTarefa.titulo;
+        editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
+        editTarefa.status = body.status ?? editTarefa.status;
+        editTarefa.descricao = body.descricao ?? editTarefa.descricao;
+        editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
+
+        await editTarefa.save();
+
+    }else{
+        return {}
+    }
 
     editTarefa.titulo = body.titulo ?? editTarefa.titulo;
     editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
@@ -20,7 +36,7 @@ async function uptade(idTarefa, body){
     editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
 
     await editTarefa.save();
-
+    
     return editTarefa;
 };
 

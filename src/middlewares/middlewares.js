@@ -1,4 +1,4 @@
-const Pessoa = require("../models/pessoa");
+const Pessoa = require("../models/responsavel");
 const Tarefa = require("../models/tarefa");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op

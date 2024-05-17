@@ -42,7 +42,7 @@ function checkConclusao(req, res, next){
 
     const data = new Date(req.body.dataConclusao);
     const hoje =  new Date();
-
+    hoje.setDate(0,0,0,0)
     if(data<hoje){
         console.log(hoje);
         return res.status(400).send({
@@ -82,7 +82,9 @@ function checkDataUpdate(req){
     const {dataConclusao} = req
     const dataAtual = new Date();
     const dataLimite = new Date(dataConclusao)
-
+    dataAtual.setHours(0,0,0,0);
+    console.log(dataAtual);
+    
     if(dataLimite < dataAtual){
         return false
     }else{

@@ -17,7 +17,7 @@ const Tarefa = database.define("tarefas",{
         allowNull: false
     },
     status:{
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.ENUM('pendente', 'concluido'),
         allowNull:false
     },
     descricao:{

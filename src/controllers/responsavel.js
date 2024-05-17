@@ -1,4 +1,4 @@
-const service = require("../service/pessoa");
+const service = require("../service/responsavel");
 const middlewares = require("../middlewares/middlewares");
 
 function list(req,res){

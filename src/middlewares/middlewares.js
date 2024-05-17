@@ -93,5 +93,16 @@ function checkDataUpdate(req){
     }
 }
 
-module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate }
+function checkPessoaId(req){
+    const pessoaId = req.pessoaId;
+
+    if(pessoaId === null){
+        console.log("Passei aqui")
+        return false
+    }else{
+        return true
+    }
+}
+
+module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId }
 

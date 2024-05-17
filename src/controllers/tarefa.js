@@ -20,6 +20,20 @@ function list(req,res){
     });
 };
 
+function filtros(req, res){
+    service.filtros(req.query).then((dados)=>{
+        return res.status(200).send({
+            message: "Encontrados:",
+            tarefas: dados
+        })
+    },(error)=>{
+        return res.status(500).send({
+            message: "Erro",
+            erro: error
+        })
+    });
+}
+
 function create(req,res){
     service.create(req.body).then((dados)=>{
         return res.status(201).send({
@@ -69,4 +83,4 @@ function remove(req,res){
         });
 };
 
-module.exports = { list, create, update, remove };
+module.exports = { list, create, update, remove, filtros };

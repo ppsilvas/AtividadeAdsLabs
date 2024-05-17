@@ -1,0 +1,51 @@
+RESPONSÁVEL:
+
+GET/localhost:3001/responsavel/ : busca todos os responsáveis
+
+POST/localhost:3001/responsavel/ : cria os responsáveis através do body da requisição
+{
+    "nome":,
+    "dataNascimento":
+}
+
+PUT/localhost:3001/responsavel/:id : atualiza o responsavel enviando :id(id do responsavel) na url e as informações através do body da requisição
+{
+    "nome",
+    "dataNascimento"
+}
+- pode ser passado apenas um dos atributos se interessar.
+
+DELETE//localhost:3001/responsavel/:id : deleta o responsável passado no :id
+- é utilizado o método .destroy() para deletar o responsável
+
+GET/localhost:3001/responsavel/concluido/ : busca os responsáveis que não possuem tarefas pendetes
+
+TAREFAS
+
+GET/localhost:3001/tarefa/ : busca todas as tarefas
+
+POST/localhost:3001/tarefa/ : cria as tarefas através do body da requisição
+{
+    "titulo",
+    "dataConclusao",
+    "status":,
+    "pessoaId":
+}
+
+PUT/localhost:3001/tarefa/:id : atualiza a tarefa enviando :id(id da tarefa) na url e as informações através do body da requisição
+{
+    "titulo",
+    "dataConclusao",
+    "status":,
+    "pessoaId":
+}
+- pode ser passado apenas um dos atributos se interessar.
+
+DELETE/localhost:3001/tarefa/ : deleta a tarefa enviando :id(id da tarefa) na url
+- é utilizado o método .destroy() para deletar a tarefa
+
+GET/localhost:3001/tarefa/?pessoaId= : busca todas as tarefas de um responsavel
+-pessoaId é a referencia do responsavel para uma determinada tarefa
+
+GET/localhost:3001/tarefa/?pessoaId=&status=pendete : busca todas as tarefas pendetes de um responsavel
+-pessoaId é a referencia do responsavel para uma determinada tarefa, e status é o status que a tarefa está, pendete ou concluida

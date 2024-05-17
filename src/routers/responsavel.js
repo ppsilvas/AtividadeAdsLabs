@@ -1,5 +1,5 @@
 const express = require("express");
-const controller = require("../controllers/pessoa");
+const controller = require("../controllers/responsavel");
 const middlewares = require("../middlewares/middlewares");
 
 const router = express.Router();

@@ -17,6 +17,21 @@ function list(req,res){
         })
 };
 
+function concluido(req,res){
+    service.concluido(req.query)
+        .then((dados)=>{
+            return res.status(200).send({
+                message: "Pessoas sem tarefas pendentes.",
+                pessoa: dados
+            })
+        }, (error)=>{
+            return res.status(500).send({
+                message: "Erro",
+                erro: error
+            })
+        });
+}
+
 function create(req,res){
     service.create(req.body)
         .then((pessoaCriada)=>{
@@ -62,4 +77,4 @@ function remove(req,res){
         })
 };
 
-module.exports = { list, create, update, remove };
+module.exports = { list, create, update, remove, concluido };

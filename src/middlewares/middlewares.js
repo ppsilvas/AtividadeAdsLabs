@@ -1,3 +1,8 @@
+const Pessoa = require("../models/pessoa");
+const Tarefa = require("../models/tarefa");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op
+
 function checkNomeCreate(req, res, next){
     if(!req.body.nome){
         return res.status(400).send({message: "Por favor escreva o nome"});
@@ -104,5 +109,30 @@ function checkPessoaId(req){
     }
 }
 
-module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId }
+async function findWithoutPendete(){
+    try{
+        const pessoasSemPendente = await Pessoa.findAll({
+            include:[{
+                model: Tarefa,
+                as:'tarefas',
+                where:{
+                    status: 'pendente',
+                },
+                required: false
+            }],
+            where:{
+                '$tarefas.id$':{
+                    [Op.eq]:null
+                }
+            }
+        })
+        console.log("Aqui 1")
+        return pessoasSemPendente
+    }catch(error){
+        console.log("Aqui 2")
+        return error
+    }
+}
+
+module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId, findWithoutPendete }
 

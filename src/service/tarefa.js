@@ -1,21 +1,10 @@
 const Tarefa = require("../models/tarefa");
-const Pessoa = require("../models/pessoa");
 const middleware = require("../middlewares/middlewares");
 
 
 async function list(queryParams){
     return await Tarefa.findAll({where: queryParams});
 };
-
-async function filtros(queryParams){
-    const filtroTarefa = await Tarefa.findAll({where: queryParams});
-    console.log(filtroTarefa)
-    const id = filtroTarefa.pessoaId;
-    const filtroPessoa = await Pessoa.findAll({where: id});
-    console.log(filtroPessoa)
-
-    return filtroPessoa
-}
 
 async function create(body){
     const novaTarefa = await Tarefa.create(body);
@@ -63,4 +52,4 @@ async function remove(idTarefa){
     return delTarefa;
 };
 
-module.exports = { list, create, uptade, remove, filtros };
+module.exports = { list, create, uptade, remove};

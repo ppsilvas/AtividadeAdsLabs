@@ -26,13 +26,17 @@ const Tarefa = database.define("tarefas",{
     },
     pessoaId:{
         type: Sequelize.INTEGER,
-        allowNull:false
+        allowNull:false,
+        references:{
+            model: Pessoa,
+            key:'id'
+        }
     }
 },{
     timestamp: true
 });
 
-Pessoa.hasMany(Tarefa,{foreignKey: 'pessoaId'})
-Tarefa.belongsTo(Pessoa,{foreignKey: 'pessoaId'})
+Pessoa.hasMany(Tarefa,{as: 'tarefas',foreignKey: 'pessoaId'})
+Tarefa.belongsTo(Pessoa,{as: 'pessoas',foreignKey: 'pessoaId'})
 
 module.exports = Tarefa

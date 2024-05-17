@@ -1,8 +1,17 @@
 const Pessoa = require("../models/pessoa");
+const middlewares = require ("../middlewares/middlewares");
 
 async function list(queryParams){
     return await Pessoa.findAll({where: queryParams});
 };
+
+async function concluido(queryParams){
+    const responsaveis = await middlewares.findWithoutPendete({where: queryParams});
+
+    console.log(responsaveis);
+
+    return responsaveis
+}
 
 async function create(dados){
     const novaPessoa = await Pessoa.create(dados);
@@ -29,4 +38,4 @@ async function remove(idPessoa){
     return delPessoa;
 };
 
-module.exports = { list, create, uptade, remove };
+module.exports = { list, create, uptade, remove, concluido };

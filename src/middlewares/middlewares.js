@@ -49,7 +49,6 @@ function checkConclusao(req, res, next){
     const hoje =  new Date();
     hoje.setDate(0,0,0,0)
     if(data<hoje){
-        console.log(hoje);
         return res.status(400).send({
             message: "Data de Conclusão é anterior que a data da atualização."
         })
@@ -88,12 +87,10 @@ function checkDataUpdate(req){
     const dataAtual = new Date();
     const dataLimite = new Date(dataConclusao)
     dataAtual.setHours(0,0,0,0);
-    console.log(dataAtual);
     
     if(dataLimite < dataAtual){
         return false
     }else{
-        console.log("Data conclusão dentro do prazo")
         return true
     }
 }
@@ -102,7 +99,6 @@ function checkPessoaId(req){
     const pessoaId = req.pessoaId;
 
     if(pessoaId === null){
-        console.log("Passei aqui")
         return false
     }else{
         return true
@@ -126,10 +122,8 @@ async function findWithoutPendete(){
                 }
             }
         })
-        console.log("Aqui 1")
         return pessoasSemPendente
     }catch(error){
-        console.log("Aqui 2")
         return error
     }
 }

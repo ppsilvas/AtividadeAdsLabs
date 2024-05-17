@@ -12,7 +12,7 @@ const database = new Sequelize(
 
 module.exports = database;
 
-require("../models/pessoa");
+require("../models/responsavel");
 require("../models/tarefa");
 
 database.sync();

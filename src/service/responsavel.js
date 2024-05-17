@@ -1,4 +1,4 @@
-const Pessoa = require("../models/pessoa");
+const Pessoa = require("../models/responsavel");
 const middlewares = require ("../middlewares/middlewares");
 
 async function list(queryParams){

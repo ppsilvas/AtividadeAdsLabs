@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  app:
+    image: api-node:1.0
+    container_name: api-node1
+    ports: 
+      - "4000:3001"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=senha
+      - DB_NAME=ADSLABS
+      - DB_DIALECT=mysql
+      - PORT=3001
+    depends_on:
+      - db 
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=senha
+      - MYSQL_DATABASE=ADSLABS

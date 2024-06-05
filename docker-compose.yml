@@ -21,3 +21,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=senha
       - MYSQL_DATABASE=ADSLABS
+    volumes:
+      - db-data:/var/lib/mysql
+
+volumes:
+    db-data:

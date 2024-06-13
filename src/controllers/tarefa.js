@@ -9,7 +9,6 @@ function list(req,res){
             })
         }else{
             return res.status(200).send({
-                message: "Tarefas encontradas",
                 tarefas: dados
             })
         }

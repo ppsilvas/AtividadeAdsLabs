@@ -6,7 +6,7 @@ async function list(queryParams){
 };
 
 async function concluido(queryParams){
-    const responsaveis = await middlewares.findWithoutPendete({where: queryParams});
+    const responsaveis = await findWithoutPendete({where: queryParams});
 
     console.log(responsaveis);
 
@@ -37,5 +37,28 @@ async function remove(idPessoa){
     
     return delPessoa;
 };
+
+async function findWithoutPendete(){
+    try{
+        const pessoasSemPendente = await Pessoa.findAll({
+            include:[{
+                model: Tarefa,
+                as:'tarefas',
+                where:{
+                    status: 'pendente',
+                },
+                required: false
+            }],
+            where:{
+                '$tarefas.id$':{
+                    [Op.eq]:null
+                }
+            }
+        })
+        return pessoasSemPendente
+    }catch(error){
+        return error
+    }
+}
 
 module.exports = { list, create, uptade, remove, concluido };

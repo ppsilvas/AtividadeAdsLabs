@@ -1,4 +1,5 @@
 const Tarefa = require("../models/tarefa");
+const Pessoa = require("../models/responsavel")
 const middleware = require("../middlewares/middlewares");
 // Service de Tarefas
 
@@ -8,6 +9,9 @@ async function list(queryParams){
 };
 
 async function create(body){
+    if(!Pessoa.findByPk(body.idTarefa)){
+        throw new Error("A pessoa responsável não existe no banco");
+    }
     const novaTarefa = await Tarefa.create(body);
 
     return novaTarefa;
@@ -15,34 +19,24 @@ async function create(body){
 
 async function uptade(idTarefa, body){
     const editTarefa = await Tarefa.findByPk(idTarefa);
-    const resultado = middleware.checkDataUpdate(editTarefa);
 
-    if(resultado === true && body.status){
-
-        editTarefa.titulo = body.titulo ?? editTarefa.titulo;
-        editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
-        editTarefa.status = body.status ?? editTarefa.status;
-        editTarefa.descricao = body.descricao ?? editTarefa.descricao;
-        editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
-
-        await editTarefa.save();
-
-        return editTarefa
-
-    }else if(resultado === false && body.status){
-        return {}
-    }else{
-        editTarefa.titulo = body.titulo ?? editTarefa.titulo;
-        editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
-        editTarefa.status = body.status ?? editTarefa.status;
-        editTarefa.descricao = body.descricao ?? editTarefa.descricao;
-        editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
-
-        await editTarefa.save();
-
-        return editTarefa
-    }
+    if(editTarefa){
+        if(Pessoa.findByPk(body.pessoaId)){
+            if(!middleware.checkDataUpdate(editTarefa)){
+                return null;
+            }
+            editTarefa.titulo = body.titulo ?? editTarefa.titulo;
+            editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
+            editTarefa.status = body.status ?? editTarefa.status;
+            editTarefa.descricao = body.descricao ?? editTarefa.descricao;
+            editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
     
+            await editTarefa.save();
+        }else{
+            throw new Error("Pessoa responsável não existe");
+        }
+    }
+    return editTarefa
 };
 
 async function remove(idTarefa){

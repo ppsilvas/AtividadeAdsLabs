@@ -5,3 +5,5 @@ node_modules
 
 #Ignorar arquivos .json
 *.json
+#ignorar teste.txt
+teste.txt

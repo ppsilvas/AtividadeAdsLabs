@@ -14,8 +14,7 @@ function list(req,res){
         }
     }, (error)=>{
         return res.status(500).send({
-            message: "Erro",
-            tarefas: error
+            message: error.message,
         })
     });
 };
@@ -28,8 +27,7 @@ function create(req,res){
         })
     },(error)=>{
         return res.status(500).send({
-            message: "Erro",
-            tarefas: error
+            message: error.message,
         })
     });
 };
@@ -48,8 +46,7 @@ function update(req,res){
             })
         },(error)=>{
             return res.status(500).send({
-                message:"Erro",
-                tarefas: error
+                message: error.message,
             })
         });
 };
@@ -62,9 +59,8 @@ function remove(req,res){
                 tarefa: dados
             })
         },(error)=>{
-            return res.status(200).send({
-                message: "Erro",
-                tarefa: error
+            return res.status(500).send({
+                message: error.message,
             })
         });
 };

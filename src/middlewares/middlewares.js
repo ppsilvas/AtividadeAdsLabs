@@ -15,11 +15,11 @@ function checkNomeCreate(req, res, next){
 };
 
 function checkDataCreate(req, res, next){
-    const dataMin = new Date('2014/12/31');
+    //const dataMin = new Date('2014/12/31');
     const dataNascimento = new Date(req.body.dataNascimento)
     if(!req.body.dataNascimento){
         return res.status(400).send({message: "Por favor envie a data de nascimento."});
-    }else if(dataNascimento > dataMin){
+    }else if(dataNascimento.getFullYear > 2014){
         return res.status(400).send({message: "O usuário deve ter nascido no mínimo em 2014"});
     }else{
         return next();
@@ -105,28 +105,5 @@ function checkPessoaId(req){
     }
 }
 
-async function findWithoutPendete(){
-    try{
-        const pessoasSemPendente = await Pessoa.findAll({
-            include:[{
-                model: Tarefa,
-                as:'tarefas',
-                where:{
-                    status: 'pendente',
-                },
-                required: false
-            }],
-            where:{
-                '$tarefas.id$':{
-                    [Op.eq]:null
-                }
-            }
-        })
-        return pessoasSemPendente
-    }catch(error){
-        return error
-    }
-}
-
-module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId, findWithoutPendete }
+module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId }
 

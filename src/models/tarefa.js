@@ -36,7 +36,7 @@ const Tarefa = database.define("tarefas",{
     timestamp: true
 });
 
-Pessoa.hasMany(Tarefa,{as: 'tarefas',foreignKey: 'pessoaId'})
-Tarefa.belongsTo(Pessoa,{as: 'pessoas',foreignKey: 'pessoaId'})
+//Pessoa.hasMany(Tarefa,{as: 'tarefas',foreignKey: 'pessoaId'})
+//Tarefa.belongsTo(Pessoa,{as: 'pessoas',foreignKey: 'pessoaId'})
 
 module.exports = Tarefa

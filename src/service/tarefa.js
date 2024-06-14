@@ -10,7 +10,7 @@ async function list(queryParams){
 
 async function create(body){
     if(!Pessoa.findByPk(body.idTarefa)){
-        throw new Error("A pessoa responsável não existe no banco");
+        return new Error("A pessoa responsável não existe no banco");
     }
     const novaTarefa = await Tarefa.create(body);
 
@@ -19,23 +19,25 @@ async function create(body){
 
 async function uptade(idTarefa, body){
     const editTarefa = await Tarefa.findByPk(idTarefa);
+    console.log(editTarefa.dataConclusao);
+
+    if(!Pessoa.findByPk(body.pessoaId) && body.pessoaId!=null){
+        return new Error("Pessoa não existe");
+    }
 
     if(editTarefa){
-        if(Pessoa.findByPk(body.pessoaId)){
-            if(!middleware.checkDataUpdate(editTarefa)){
-                return null;
-            }
-            editTarefa.titulo = body.titulo ?? editTarefa.titulo;
-            editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
-            editTarefa.status = body.status ?? editTarefa.status;
-            editTarefa.descricao = body.descricao ?? editTarefa.descricao;
-            editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
-    
-            await editTarefa.save();
-        }else{
-            throw new Error("Pessoa responsável não existe");
+        if(!middleware.checkDataUpdate(editTarefa)){
+            return null;
         }
+        editTarefa.titulo = body.titulo ?? editTarefa.titulo;
+        editTarefa.dataConclusao = body.dataConclusao ?? editTarefa.dataConclusao;
+        editTarefa.status = body.status ?? editTarefa.status;
+        editTarefa.descricao = body.descricao ?? editTarefa.descricao;
+        editTarefa.pessoaId = body.pessoaId ?? editTarefa.pessoaId;
+        
+        await editTarefa.save();
     }
+
     return editTarefa
 };
 

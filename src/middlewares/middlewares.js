@@ -8,6 +8,29 @@ function checkNomeCreate(req, res, next){
         return res.status(400).send({message: "Por favor escreva o nome"});
     }else if((req.body.nome).length <3){
         return res.status(400).send({message: "Os nomes devem ter mais de 3 caracteres. Envie novamente."});
+    }else{
+        for(i=0; i<(req.body.nome).length; i++){
+            if((req.body.nome[i]<65 || req.body.nome[i]>90)&&(req.body.nome[i]<97 || req.body.nome[i]>122)&&(req.body.nome[i]!=' ')){
+                return res.status(400).send({message: "Os nomes devem ter apenas letras. Envie novamente."});
+            }
+        }
+    }
+
+
+    return next();
+};
+
+function checkTituloCreate(req, res, next){
+    if(!req.body.titulo){
+        return res.status(400).send({message: "Por favor escreva o nome"});
+    }else if((req.body.titulo).length <3){
+        return res.status(400).send({message: "Os títulos devem ter mais de 3 caracteres. Envie novamente."});
+    }else{
+        for(i=0; i<(req.body.titulo).length; i++){
+            if((req.body.titulo[i]<65 || req.body.titulo[i]>90)&&(req.body.titulo[i]<97 || req.body.titulo[i]>122)&&(req.body.titulo[i]!=' ')){
+                return res.status(400).send({message: "Os nomes devem ter apenas letras. Envie novamente."});
+            }
+        }
     }
 
 
@@ -83,7 +106,7 @@ function checkUpdate(req, res, next){
 }
 
 function checkDataUpdate(req){
-    const {dataConclusao} = req
+    const {dataConclusao} = req.dataConclusao
     const dataAtual = new Date();
     const dataLimite = new Date(dataConclusao)
     dataAtual.setHours(0,0,0,0);
@@ -105,5 +128,5 @@ function checkPessoaId(req){
     }
 }
 
-module.exports = { checkNomeCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId }
+module.exports = { checkNomeCreate, checkTituloCreate, checkDataCreate, checkConclusao , checkUpdate, checkDataUpdate, checkPessoaId }
 
